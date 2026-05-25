@@ -45,7 +45,7 @@ body{
   mix-blend-mode:multiply;
 }
 .cursor-ring{
-  width:20px;height:20px;border-radius:50%;
+  width:36px;height:36px;border-radius:50%;
   border:1.5px solid var(--accent);position:fixed;
   pointer-events:none;z-index:9998;
   transform:translate(-50%,-50%);
@@ -780,28 +780,46 @@ section.active{display:block;}
         <div class="form-alert success" id="successMsg">✅ Message sent! I'll get back to you soon.</div>
         <div class="form-alert error"   id="errorMsg">❌ Something went wrong. Please try again.</div>
 
-        <form id="contactForm">
+        <form id="contactForm" autocomplete="off">
           <input type="hidden" name="access_key" value="46561691-f717-401a-a8cf-0c2b173ffbb3">
           <input type="hidden" name="subject"    value="New message from Portfolio">
           <input type="hidden" name="from_name"  value="Vikram Singh Portfolio">
-          <input type="checkbox" name="botcheck" style="display:none">
+
+          <!-- Honeypot traps: bots fill these, humans don't see them -->
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true">
+          <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+            <input type="text"  name="website"  tabindex="-1" autocomplete="off">
+            <input type="email" name="email_confirm" tabindex="-1" autocomplete="off">
+          </div>
 
           <div class="form-row">
             <label for="name">Your Name</label>
-            <input type="text"  id="name"    name="name"    placeholder="Arjun Sharma" required>
+            <input type="text" id="name" name="name" placeholder="Arjun Sharma" required maxlength="80" autocomplete="name">
           </div>
           <div class="form-row">
             <label for="email">Email Address</label>
-            <input type="email" id="email"   name="email"   placeholder="arjun@example.com" required>
+            <input type="email" id="email" name="email" placeholder="arjun@example.com" required maxlength="120" autocomplete="email">
           </div>
           <div class="form-row">
             <label for="subject">Subject</label>
-            <input type="text"  id="subject" name="subject" placeholder="Project Collaboration" required>
+            <input type="text" id="subject" name="subject" placeholder="Project Collaboration" required maxlength="120">
           </div>
           <div class="form-row">
             <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell me what's on your mind..." required></textarea>
+            <textarea id="message" name="message" placeholder="Tell me what's on your mind..." required maxlength="2000"></textarea>
+            <p style="font-size:.75rem;color:var(--muted);margin-top:.3rem;text-align:right;" id="charCount">0 / 2000</p>
           </div>
+
+          <!-- Math CAPTCHA -->
+          <div class="form-row" id="captchaRow">
+            <label for="captchaInput" id="captchaLabel" style="display:flex;align-items:center;gap:.5rem;">
+              <span id="captchaQuestion" style="font-family:'DM Mono',monospace;background:var(--paper2);padding:.3rem .8rem;border-radius:8px;font-size:.95rem;color:var(--ink);border:1px solid var(--border);"></span>
+              <span>=</span>
+            </label>
+            <input type="number" id="captchaInput" placeholder="Your answer" required style="max-width:160px;">
+            <p style="font-size:.78rem;color:var(--muted);margin-top:.4rem;">Quick check to keep spam away 🛡️</p>
+          </div>
+
           <button type="submit" class="submit-btn" id="submitBtn">
             <span class="spinner"></span>
             <span class="btn-label">Send Message →</span>
@@ -877,27 +895,160 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-/* contact form */
-const form=document.getElementById('contactForm');
-const sbtn=document.getElementById('submitBtn');
-const okMsg=document.getElementById('successMsg');
-const errMsg=document.getElementById('errorMsg');
-form.addEventListener('submit',async e=>{
+/* ── contact form + spam detection ── */
+const form    = document.getElementById('contactForm');
+const sbtn    = document.getElementById('submitBtn');
+const okMsg   = document.getElementById('successMsg');
+const errMsg  = document.getElementById('errorMsg');
+
+// ── 1. MATH CAPTCHA ──
+let captchaAnswer = 0;
+function refreshCaptcha() {
+  const a = Math.floor(Math.random() * 15) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  const ops = [
+    { sym: '+', fn: (x,y) => x + y },
+    { sym: '−', fn: (x,y) => x - y },
+    { sym: '×', fn: (x,y) => x * y },
+  ];
+  const op = ops[Math.floor(Math.random() * ops.length)];
+  captchaAnswer = op.fn(a, b);
+  document.getElementById('captchaQuestion').textContent = `What is ${a} ${op.sym} ${b}?`;
+  document.getElementById('captchaInput').value = '';
+}
+refreshCaptcha();
+
+// ── 2. TIME CHECK — bots submit instantly ──
+let formOpenTime = Date.now();
+document.getElementById('contact') && (() => {
+  const observer = new MutationObserver(() => {
+    if (document.getElementById('contact').classList.contains('active')) {
+      formOpenTime = Date.now();
+      refreshCaptcha();
+    }
+  });
+  observer.observe(document.getElementById('contact'), { attributes: true });
+})();
+
+// ── 3. CHAR COUNTER ──
+const msgArea = document.getElementById('message');
+const charCount = document.getElementById('charCount');
+msgArea.addEventListener('input', () => {
+  charCount.textContent = `${msgArea.value.length} / 2000`;
+  charCount.style.color = msgArea.value.length > 1800 ? 'var(--accent)' : 'var(--muted)';
+});
+
+// ── 4. RATE LIMIT — max 2 submissions per 10 mins ──
+const RATE_KEY = 'cf_submissions';
+function getRateData() {
+  try { return JSON.parse(sessionStorage.getItem(RATE_KEY)) || []; } catch { return []; }
+}
+function recordSubmission() {
+  const now = Date.now();
+  const recent = getRateData().filter(t => now - t < 10 * 60 * 1000);
+  recent.push(now);
+  sessionStorage.setItem(RATE_KEY, JSON.stringify(recent));
+}
+function isRateLimited() {
+  const now = Date.now();
+  return getRateData().filter(t => now - t < 10 * 60 * 1000).length >= 2;
+}
+
+// ── 5. INPUT VALIDATION ──
+function showFormError(msg) {
+  errMsg.querySelector ? (errMsg.textContent = '❌ ' + msg) : null;
+  errMsg.textContent = '❌ ' + msg;
+  errMsg.classList.add('show');
+  setTimeout(() => errMsg.classList.remove('show'), 6000);
+}
+
+function validateInputs(data) {
+  const name    = data.get('name').trim();
+  const email   = data.get('email').trim();
+  const subject = data.get('subject').trim();
+  const message = data.get('message').trim();
+
+  // Honeypot check
+  if (data.get('website') || data.get('email_confirm')) return 'Bot detected.';
+
+  // Time check — must spend at least 4 seconds on form
+  if (Date.now() - formOpenTime < 4000) return 'Please take a moment to fill out the form.';
+
+  // Rate limit
+  if (isRateLimited()) return 'Too many messages sent. Please wait 10 minutes.';
+
+  // Name: no URLs, no numbers, no special chars, 2–80 chars
+  if (name.length < 2) return 'Please enter your full name.';
+  if (/https?:\/\/|www\./i.test(name)) return 'Name cannot contain URLs.';
+  if (/[<>{}\[\]\\\/]/.test(name)) return 'Name contains invalid characters.';
+  if (/\d{4,}/.test(name)) return 'Name looks invalid.';
+
+  // Email: basic format + no disposable domain keywords
+  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRx.test(email)) return 'Please enter a valid email address.';
+  const disposable = ['mailinator','tempmail','guerrillamail','10minutemail','throwam','trashmail','yopmail','fakeinbox'];
+  if (disposable.some(d => email.toLowerCase().includes(d))) return 'Disposable email addresses are not allowed.';
+
+  // Subject: no URLs
+  if (/https?:\/\/|www\./i.test(subject)) return 'Subject cannot contain URLs.';
+  if (subject.length < 3) return 'Please enter a subject.';
+
+  // Message: no excessive URLs, min length
+  const urlMatches = (message.match(/https?:\/\//g) || []).length;
+  if (urlMatches > 2) return 'Message contains too many links.';
+  if (message.length < 20) return 'Please write a more detailed message (at least 20 characters).';
+
+  // Spam keywords
+  const spamWords = ['casino','viagra','crypto investment','click here','free money','earn $','make money fast','seo service','buy followers','adult content','xxx'];
+  if (spamWords.some(w => message.toLowerCase().includes(w) || subject.toLowerCase().includes(w)))
+    return 'Your message was flagged as spam.';
+
+  return null; // all good
+}
+
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  okMsg.classList.remove('show');errMsg.classList.remove('show');
-  sbtn.disabled=true;sbtn.classList.add('loading');
-  try{
-    const res=await fetch('https://api.web3forms.com/submit',{
-      method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(Object.fromEntries(new FormData(form)))
+  okMsg.classList.remove('show');
+  errMsg.classList.remove('show');
+
+  const data = new FormData(form);
+
+  // Validate inputs
+  const validationError = validateInputs(data);
+  if (validationError) { showFormError(validationError); return; }
+
+  // Check CAPTCHA
+  const userAnswer = parseInt(document.getElementById('captchaInput').value, 10);
+  if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
+    showFormError('Incorrect answer to the math question. Please try again.');
+    refreshCaptcha();
+    return;
+  }
+
+  sbtn.disabled = true;
+  sbtn.classList.add('loading');
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(data))
     });
-    const d=await res.json();
-    if(d.success){okMsg.classList.add('show');form.reset();}
-    else throw new Error(d.message);
-  }catch(err){errMsg.classList.add('show');}
-  finally{
-    sbtn.disabled=false;sbtn.classList.remove('loading');
-    setTimeout(()=>{okMsg.classList.remove('show');errMsg.classList.remove('show');},6000);
+    const d = await res.json();
+    if (d.success) {
+      recordSubmission();
+      okMsg.classList.add('show');
+      form.reset();
+      charCount.textContent = '0 / 2000';
+      refreshCaptcha();
+    } else throw new Error(d.message);
+  } catch (err) {
+    errMsg.textContent = '❌ Something went wrong. Please try again.';
+    errMsg.classList.add('show');
+  } finally {
+    sbtn.disabled = false;
+    sbtn.classList.remove('loading');
+    setTimeout(() => { okMsg.classList.remove('show'); errMsg.classList.remove('show'); }, 6000);
   }
 });
 </script>
