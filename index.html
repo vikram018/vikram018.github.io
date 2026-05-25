@@ -986,7 +986,7 @@ function validateInputs(data) {
   if (Date.now() - formOpenTime < 4000) return 'Please take a moment to fill out the form.';
 
   // Rate limit
-  //if (isRateLimited()) return 'Too many messages sent. Please wait 10 minutes.';
+  if (isRateLimited()) return 'Too many messages sent. Please wait 10 minutes.';
 
   // Name: no URLs, no numbers, no special chars, 2–80 chars
   if (name.length < 2) return 'Please enter your full name.';
