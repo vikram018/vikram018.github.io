@@ -1020,7 +1020,7 @@ form.addEventListener('submit', async e => {
   // Check CAPTCHA
   const userAnswer = parseInt(document.getElementById('captchaInput').value, 10);
   if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
-    showFormError('Incorrect answer to the math question. Please try again.');
+    showFormError('Incorrect captcha. Please try again.');
     refreshCaptcha();
     return;
   }
