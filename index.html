@@ -23,7 +23,26 @@
   --border-strong: rgba(15,14,12,0.25);
   --card-bg: #fffdf7;
   --nav-h: 68px;
+  --nav-bg: rgba(245,242,235,.88);
 }
+html.dark {
+  --ink: #f0ece3;
+  --paper: #141210;
+  --paper2: #1c1a17;
+  --paper3: #232018;
+  --accent: #e0603f;
+  --accent2: #4a7db5;
+  --accent3: #3d9e68;
+  --gold: #d4a94e;
+  --text: #e8e3d8;
+  --muted: #8a8070;
+  --border: rgba(240,236,227,0.10);
+  --border-strong: rgba(240,236,227,0.22);
+  --card-bg: #1a1814;
+  --nav-bg: rgba(20,18,16,.92);
+}
+*,*::before,*::after{transition:background-color .35s ease,border-color .35s ease,color .25s ease;}
+.cursor,.cursor-ring{transition:transform .1s,width .2s,height .2s,background .2s,opacity .2s !important;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
@@ -64,7 +83,7 @@ body::before{
 /* ── nav ── */
 nav{
   position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;
-  background:rgba(245,242,235,.88);backdrop-filter:blur(14px);
+  background:var(--nav-bg);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 5%;
   animation:slideDown .7s ease both;
@@ -505,6 +524,9 @@ section.active{display:block;}
       <li><a href="#contact"    class="nav-link" data-nav="contact">Contact</a></li>
     </ul>
     <a href="Vikram_Singh_CV.pdf" download class="nav-cv">Download CV</a>
+    <button id="themeToggle" aria-label="Toggle dark mode" onclick="toggleTheme()" style="width:44px;height:26px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--paper2);cursor:none;position:relative;flex-shrink:0;padding:0;transition:background .35s,border-color .35s;">
+      <span id="themeThumb" style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--ink);transition:transform .3s cubic-bezier(.4,0,.2,1),background .35s;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;">🌙</span>
+    </button>
     <button class="mob-toggle" aria-label="Menu" id="mobToggle">
       <span></span><span></span><span></span>
     </button>
@@ -1072,6 +1094,24 @@ form.addEventListener('submit', async e => {
     setTimeout(() => { okMsg.classList.remove('show'); errMsg.classList.remove('show'); }, 6000);
   }
 });
+
+/* ── dark mode ── */
+function toggleTheme(){
+  const dark=document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme',dark?'dark':'light');
+  const thumb=document.getElementById('themeThumb');
+  thumb.style.transform=dark?'translateX(18px)':'translateX(0)';
+  thumb.textContent=dark?'☀️':'🌙';
+}
+(function initTheme(){
+  const saved=localStorage.getItem('theme');
+  const prefersDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  if(saved==='dark'||(! saved&&prefersDark)){
+    document.documentElement.classList.add('dark');
+    const thumb=document.getElementById('themeThumb');
+    if(thumb){thumb.style.transform='translateX(18px)';thumb.textContent='☀️';}
+  }
+})();
 </script>
 </body>
 </html>
