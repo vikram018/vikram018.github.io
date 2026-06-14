@@ -53,8 +53,6 @@ body{
   overflow-x:hidden;
   cursor:none;
 }
- 
-/* ── custom cursor ── */
 .cursor{
   width:10px;height:10px;border-radius:50%;
   background:var(--accent);position:fixed;
@@ -71,16 +69,11 @@ body{
   transition:transform .15s ease,width .2s,height .2s,opacity .2s;
   opacity:.5;
 }
-body:hover .cursor{opacity:1;}
- 
-/* ── noise texture overlay ── */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
   opacity:.4;
 }
- 
-/* ── nav ── */
 nav{
   position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;
   background:var(--nav-bg);backdrop-filter:blur(14px);
@@ -116,14 +109,10 @@ nav a.active::after{
 .nav-cv:hover{background:var(--accent);transform:translateY(-1px);}
 .mob-toggle{display:none;flex-direction:column;gap:5px;cursor:none;border:none;background:none;padding:4px;}
 .mob-toggle span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
- 
-/* ── sections ── */
 section{display:none;min-height:100vh;padding:calc(var(--nav-h) + 60px) 5% 80px;animation:fadeUp .5s ease both;}
 section.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .wrap{max-width:1320px;margin:0 auto;}
- 
-/* ── section headers ── */
 .sec-eyebrow{
   font-family:'DM Mono',monospace;font-size:.78rem;
   letter-spacing:.18em;text-transform:uppercase;
@@ -135,8 +124,6 @@ section.active{display:block;}
   letter-spacing:-.04em;margin-bottom:1.5rem;
 }
 .sec-sub{font-size:1.1rem;color:var(--muted);max-width:560px;line-height:1.7;}
- 
-/* ══════════════════ HOME ══════════════════ */
 #home{
   display:none;align-items:center;
   background:linear-gradient(160deg,var(--paper) 60%,var(--paper3) 100%);
@@ -189,8 +176,6 @@ section.active{display:block;}
 .btn-solid:hover{background:var(--accent);transform:translateY(-2px);}
 .btn-outline{border-color:var(--border-strong);color:var(--ink);}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
- 
-/* hero stats card */
 .hero-card{
   background:var(--card-bg);border:1px solid var(--border);border-radius:24px;
   padding:2.5rem;position:relative;overflow:hidden;
@@ -213,8 +198,6 @@ section.active{display:block;}
   color:var(--ink);letter-spacing:-.04em;margin-bottom:.25rem;
 }
 .stat-label{font-size:.82rem;color:var(--muted);font-weight:500;letter-spacing:.02em;}
- 
-/* ══════════════════ ABOUT — Profile Photo ══════════════════ */
 .about-profile-wrap {
   display: flex;
   flex-direction: column;
@@ -228,7 +211,6 @@ section.active{display:block;}
   height: 160px;
   margin-bottom: 1.2rem;
 }
-/* Spinning accent ring */
 .about-photo-ring::before {
   content: '';
   position: absolute;
@@ -238,7 +220,6 @@ section.active{display:block;}
   animation: spin-ring 8s linear infinite;
   opacity: 0.5;
 }
-/* Static full border underneath */
 .about-photo-ring::after {
   content: '';
   position: absolute;
@@ -247,7 +228,6 @@ section.active{display:block;}
   border: 2px solid var(--border-strong);
 }
 @keyframes spin-ring { to { transform: rotate(360deg); } }
- 
 .about-photo {
   width: 160px;
   height: 160px;
@@ -265,7 +245,6 @@ section.active{display:block;}
   transform: scale(1.02);
   box-shadow: 0 10px 28px rgba(200,75,47,.13);
 }
-/* Fallback avatar shown when no image is found */
 .about-photo-fallback {
   width: 160px;
   height: 160px;
@@ -299,8 +278,6 @@ section.active{display:block;}
   padding: .3rem .9rem;
   border-radius: 20px;
 }
- 
-/* ══════════════════ ABOUT ══════════════════ */
 .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:3rem;align-items:start;}
 .about-prose p{color:var(--muted);line-height:1.9;font-size:1.05rem;margin-bottom:1.4rem;}
 .about-prose strong{color:var(--ink);}
@@ -343,8 +320,6 @@ section.active{display:block;}
 .cert-icon{font-size:1.8rem;flex-shrink:0;}
 .cert-name{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.2rem;line-height:1.35;}
 .cert-by{font-size:.78rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.04em;}
- 
-/* ══════════════════ EXPERIENCE ══════════════════ */
 .timeline{position:relative;margin-top:3rem;padding-left:2.5rem;}
 .timeline::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
@@ -380,8 +355,6 @@ section.active{display:block;}
 }
 .t-ul li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:.9rem;}
 .t-ul strong{color:var(--ink);}
- 
-/* ══════════════════ PROJECTS ══════════════════ */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem;margin-top:3rem;}
 .proj-card{
   background:var(--card-bg);border:1px solid var(--border);border-radius:22px;
@@ -416,9 +389,11 @@ section.active{display:block;}
   padding-top:1.2rem;border-top:1px solid var(--border);
   transition:gap .2s;
 }
+.proj-link + .proj-link {
+  padding-top:.6rem;
+  border-top:none;
+}
 .proj-link:hover{gap:.7rem;}
- 
-/* ══════════════════ CONTACT ══════════════════ */
 .contact-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;margin-top:3rem;align-items:start;}
 .contact-cards{display:flex;flex-direction:column;gap:1rem;}
 .c-card{
@@ -477,16 +452,12 @@ section.active{display:block;}
 .submit-btn.loading .btn-label{display:none;}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
- 
-/* ── footer strip ── */
 .footer{
   text-align:center;padding:2rem;
   font-size:.82rem;color:var(--muted);
   font-family:'DM Mono',monospace;letter-spacing:.06em;
   border-top:1px solid var(--border);
 }
- 
-/* ── responsive ── */
 @media(max-width:1024px){
   .hero,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem;}
   .hero-card{display:none;}
@@ -501,18 +472,15 @@ section.active{display:block;}
   .t-head{flex-direction:column;gap:.5rem;}
   .about-photo-ring,.about-photo,.about-photo-fallback{width:130px;height:130px;}
 }
- 
-/* ── reveal ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
- 
+
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
- 
-<!-- NAV -->
+
 <nav>
   <div class="nav-inner">
     <a class="logo" href="#home" data-nav="home"><span class="logo-dot"></span>Vikram Singh</a>
@@ -532,8 +500,8 @@ section.active{display:block;}
     </button>
   </div>
 </nav>
- 
-<!-- ════════════ HOME ════════════ -->
+
+<!-- HOME -->
 <section id="home" class="active">
   <div class="hero">
     <div class="hero-content">
@@ -565,30 +533,24 @@ section.active{display:block;}
     </div>
   </div>
 </section>
- 
-<!-- ════════════ ABOUT ════════════ -->
+
+<!-- ABOUT -->
 <section id="about">
   <div class="wrap">
     <p class="sec-eyebrow">About Me</p>
     <h2 class="sec-title">The person behind the code</h2>
     <p class="sec-sub">Final-year CS student blending technical skill with real-world leadership.</p>
- 
-    <!-- ── LinkedIn-style circular profile photo ── -->
+
     <div class="about-profile-wrap">
       <div class="about-photo-ring">
-        <img
-          src="profile.jpg"
-          alt="Vikram Singh"
-          class="about-photo"
-          id="aboutPhoto"
-          onerror="this.style.display='none';document.getElementById('photoFallback').style.display='flex';"
-        >
+        <img src="profile.jpg" alt="Vikram Singh" class="about-photo" id="aboutPhoto"
+          onerror="this.style.display='none';document.getElementById('photoFallback').style.display='flex';">
         <div class="about-photo-fallback" id="photoFallback" style="display:none;">👤</div>
       </div>
       <p class="about-photo-name">Vikram Singh</p>
       <span class="about-photo-tag">CS Student · Full Stack Developer</span>
     </div>
- 
+
     <div class="about-layout">
       <div class="about-prose reveal">
         <p>I'm a final-year Computer Science student at <strong>Lovely Professional University</strong> with a unique blend of technical expertise and social-impact leadership. My work sits at the intersection of building robust software and creating meaningful change at scale.</p>
@@ -597,7 +559,6 @@ section.active{display:block;}
         <div class="callout"><p><strong>🎓 Academic Focus:</strong> Data Structures & Algorithms, DBMS, Software Engineering — with hands-on application in production systems.</p></div>
         <div class="callout"><p><strong>💡 Results:</strong> 30% efficiency improvement via custom tracking systems · 45% engagement uplift through strategic campaigns.</p></div>
       </div>
- 
       <div class="skills-stack reveal">
         <div class="skill-block">
           <div class="skill-block-head"><span class="skill-block-icon">💻</span><h4>Programming Languages</h4></div>
@@ -617,7 +578,7 @@ section.active{display:block;}
         </div>
       </div>
     </div>
- 
+
     <div style="margin-top:5rem;" class="reveal">
       <p class="sec-eyebrow">Certifications</p>
       <h3 style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-.02em;">Credentials</h3>
@@ -633,16 +594,14 @@ section.active{display:block;}
     </div>
   </div>
 </section>
- 
-<!-- ════════════ EXPERIENCE ════════════ -->
+
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="wrap">
     <p class="sec-eyebrow">Experience</p>
     <h2 class="sec-title">Professional journey</h2>
     <p class="sec-sub">Where I've worked, studied, and made an impact.</p>
- 
     <div class="timeline">
- 
       <div class="t-item reveal">
         <div class="t-dot">🚀</div>
         <div class="t-card">
@@ -664,7 +623,6 @@ section.active{display:block;}
           </ul>
         </div>
       </div>
- 
       <div class="t-item reveal">
         <div class="t-dot">💼</div>
         <div class="t-card">
@@ -686,7 +644,6 @@ section.active{display:block;}
           </ul>
         </div>
       </div>
- 
       <div class="t-item reveal">
         <div class="t-dot">🎓</div>
         <div class="t-card">
@@ -711,14 +668,14 @@ section.active{display:block;}
     </div>
   </div>
 </section>
- 
-<!-- ════════════ PROJECTS ════════════ -->
+
+<!-- PROJECTS -->
 <section id="projects">
   <div class="wrap">
     <p class="sec-eyebrow">Projects</p>
     <h2 class="sec-title">Featured work</h2>
     <p class="sec-sub">A selection of projects demonstrating technical depth and problem-solving.</p>
- 
+
     <div class="proj-grid">
       <div class="proj-card reveal">
         <div class="proj-head proj-head-1">
@@ -736,7 +693,7 @@ section.active{display:block;}
           <a href="https://vikram018.github.io/janjeevikasansthan/" target="_blank" class="proj-link">View Live →</a>
         </div>
       </div>
- 
+
       <div class="proj-card reveal">
         <div class="proj-head proj-head-2">
           <div class="proj-emoji">🗄️</div>
@@ -750,9 +707,10 @@ section.active{display:block;}
             <span class="tech">DB Design</span><span class="tech">Performance</span>
           </div>
           <a href="https://github.com/vikram018" target="_blank" class="proj-link">View on GitHub →</a>
+          <a href="https://vikram018.github.io/databaseoptimizationsuite/#" target="_blank" class="proj-link">View Live →</a>
         </div>
       </div>
- 
+
       <div class="proj-card reveal">
         <div class="proj-head proj-head-3">
           <div class="proj-emoji">🌱</div>
@@ -771,14 +729,14 @@ section.active{display:block;}
     </div>
   </div>
 </section>
- 
-<!-- ════════════ CONTACT ════════════ -->
+
+<!-- CONTACT -->
 <section id="contact">
   <div class="wrap">
     <p class="sec-eyebrow">Contact</p>
     <h2 class="sec-title">Let's connect</h2>
     <p class="sec-sub">Open to roles, collaborations, and interesting conversations.</p>
- 
+
     <div class="contact-layout">
       <div class="contact-cards reveal">
         <div class="c-card">
@@ -798,24 +756,21 @@ section.active{display:block;}
           <div><h4>Location</h4><p>Raebareli, UP · Studying in Jalandhar, Punjab</p></div>
         </div>
       </div>
- 
+
       <div class="form-wrap reveal">
         <h3 class="form-title">Send a message</h3>
         <div class="form-alert success" id="successMsg">✅ Message sent! I'll get back to you soon.</div>
         <div class="form-alert error"   id="errorMsg">❌ Something went wrong. Please try again.</div>
- 
+
         <form id="contactForm" autocomplete="off">
           <input type="hidden" name="access_key" value="46561691-f717-401a-a8cf-0c2b173ffbb3">
           <input type="hidden" name="subject"    value="New message from Portfolio">
           <input type="hidden" name="from_name"  value="Vikram Singh Portfolio">
- 
-          <!-- Honeypot traps: bots fill these, humans don't see them -->
           <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true">
           <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
             <input type="text"  name="website"  tabindex="-1" autocomplete="off">
             <input type="email" name="email_confirm" tabindex="-1" autocomplete="off">
           </div>
- 
           <div class="form-row">
             <label for="name">Your Name</label>
             <input type="text" id="name" name="name" placeholder="Arjun Sharma" required maxlength="80" autocomplete="name">
@@ -833,8 +788,6 @@ section.active{display:block;}
             <textarea id="message" name="message" placeholder="Tell me what's on your mind..." required maxlength="2000"></textarea>
             <p style="font-size:.75rem;color:var(--muted);margin-top:.3rem;text-align:right;" id="charCount">0 / 2000</p>
           </div>
- 
-          <!-- Math CAPTCHA -->
           <div class="form-row" id="captchaRow">
             <div style="background:var(--paper2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.75rem;">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;">
@@ -842,7 +795,7 @@ section.active{display:block;}
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                   <span style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Bot Protection</span>
                 </div>
-                <button type="button" id="refreshCaptchaBtn" onclick="refreshCaptcha()" aria-label="Refresh CAPTCHA" title="Get a new question" style="display:inline-flex;align-items:center;gap:.35rem;background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:.28rem .75rem .28rem .55rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--muted);transition:color .18s,background .18s,border-color .18s;" onmouseover="this.style.background='var(--accent)';this.style.color='#fff';this.style.borderColor='var(--accent)';" onmouseout="this.style.background='var(--paper)';this.style.color='var(--muted)';this.style.borderColor='var(--border)';">
+                <button type="button" id="refreshCaptchaBtn" onclick="refreshCaptcha()" aria-label="Refresh CAPTCHA" style="display:inline-flex;align-items:center;gap:.35rem;background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:.28rem .75rem .28rem .55rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--muted);transition:color .18s,background .18s,border-color .18s;" onmouseover="this.style.background='var(--accent)';this.style.color='#fff';this.style.borderColor='var(--accent)';" onmouseout="this.style.background='var(--paper)';this.style.color='var(--muted)';this.style.borderColor='var(--border)';">
                   <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .45s cubic-bezier(.4,0,.2,1);"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                   New question
                 </button>
@@ -854,7 +807,6 @@ section.active{display:block;}
               </div>
             </div>
           </div>
- 
           <button type="submit" class="submit-btn" id="submitBtn">
             <span class="spinner"></span>
             <span class="btn-label">Send Message →</span>
@@ -864,11 +816,10 @@ section.active{display:block;}
     </div>
   </div>
 </section>
- 
+
 <div class="footer">Made with care · Vikram Singh · 2025</div>
- 
+
 <script>
-/* cursor */
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
@@ -877,8 +828,6 @@ document.querySelectorAll('a,button,.stat,.skill-block,.cert,.proj-card,.c-card,
   el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2)';ring.style.opacity='0.2';});
   el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.opacity='0.5';});
 });
- 
-/* typing */
 const roles=['Full Stack Developer','Database Specialist','Project Manager','Community Leader'];
 let ri=0,ci=0,del=false;
 const el=document.getElementById('typeEl');
@@ -891,8 +840,6 @@ function type(){
   setTimeout(type,del?55:110);
 }
 setTimeout(type,800);
- 
-/* navigation */
 const navLinks=document.querySelectorAll('.nav-link');
 const sections=document.querySelectorAll('section');
 function goTo(id){
@@ -905,8 +852,6 @@ function goTo(id){
 }
 navLinks.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();if(l.dataset.nav)goTo(l.dataset.nav);}));
 document.querySelector('.logo').addEventListener('click',e=>{e.preventDefault();goTo('home');});
- 
-/* mobile menu */
 const tog=document.getElementById('mobToggle');
 const navUl=document.querySelector('nav ul');
 tog.addEventListener('click',()=>{
@@ -923,180 +868,98 @@ tog.addEventListener('click',()=>{
   }
 });
 navUl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navUl.style.display='';}));
- 
-/* reveal on scroll */
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
- 
-/* ── contact form + spam detection ── */
-const form    = document.getElementById('contactForm');
-const sbtn    = document.getElementById('submitBtn');
-const okMsg   = document.getElementById('successMsg');
-const errMsg  = document.getElementById('errorMsg');
- 
-// ── 1. MATH CAPTCHA ──
-let captchaAnswer = 0;
-function refreshCaptcha() {
-  const a = Math.floor(Math.random() * 15) + 1;
-  const b = Math.floor(Math.random() * 10) + 1;
-  const ops = [
-    { sym: '+', fn: (x,y) => x + y },
-    { sym: '−', fn: (x,y) => x - y },
-    { sym: '×', fn: (x,y) => x * y },
-  ];
-  const op = ops[Math.floor(Math.random() * ops.length)];
-  captchaAnswer = op.fn(a, b);
-  document.getElementById('captchaQuestion').textContent = `What is ${a} ${op.sym} ${b}?`;
-  document.getElementById('captchaInput').value = '';
-  // Spin the refresh icon
-  const icon = document.getElementById('refreshIcon');
-  if (icon) {
-    icon.style.transform = 'rotate(360deg)';
-    setTimeout(() => { icon.style.transform = 'rotate(0deg)'; icon.style.transition = 'none'; setTimeout(() => { icon.style.transition = 'transform .4s'; }, 20); }, 420);
-  }
+const form=document.getElementById('contactForm');
+const sbtn=document.getElementById('submitBtn');
+const okMsg=document.getElementById('successMsg');
+const errMsg=document.getElementById('errorMsg');
+let captchaAnswer=0;
+function refreshCaptcha(){
+  const a=Math.floor(Math.random()*15)+1;
+  const b=Math.floor(Math.random()*10)+1;
+  const ops=[{sym:'+',fn:(x,y)=>x+y},{sym:'−',fn:(x,y)=>x-y},{sym:'×',fn:(x,y)=>x*y}];
+  const op=ops[Math.floor(Math.random()*ops.length)];
+  captchaAnswer=op.fn(a,b);
+  document.getElementById('captchaQuestion').textContent=`What is ${a} ${op.sym} ${b}?`;
+  document.getElementById('captchaInput').value='';
+  const icon=document.getElementById('refreshIcon');
+  if(icon){icon.style.transform='rotate(360deg)';setTimeout(()=>{icon.style.transform='rotate(0deg)';icon.style.transition='none';setTimeout(()=>{icon.style.transition='transform .4s';},20);},420);}
 }
 refreshCaptcha();
- 
-// ── 2. TIME CHECK — bots submit instantly ──
-let formOpenTime = Date.now();
-document.getElementById('contact') && (() => {
-  const observer = new MutationObserver(() => {
-    if (document.getElementById('contact').classList.contains('active')) {
-      formOpenTime = Date.now();
-      refreshCaptcha();
-    }
+let formOpenTime=Date.now();
+document.getElementById('contact')&&(()=>{
+  const observer=new MutationObserver(()=>{
+    if(document.getElementById('contact').classList.contains('active')){formOpenTime=Date.now();refreshCaptcha();}
   });
-  observer.observe(document.getElementById('contact'), { attributes: true });
+  observer.observe(document.getElementById('contact'),{attributes:true});
 })();
- 
-// ── 3. CHAR COUNTER ──
-const msgArea = document.getElementById('message');
-const charCount = document.getElementById('charCount');
-msgArea.addEventListener('input', () => {
-  charCount.textContent = `${msgArea.value.length} / 2000`;
-  charCount.style.color = msgArea.value.length > 1800 ? 'var(--accent)' : 'var(--muted)';
+const msgArea=document.getElementById('message');
+const charCount=document.getElementById('charCount');
+msgArea.addEventListener('input',()=>{
+  charCount.textContent=`${msgArea.value.length} / 2000`;
+  charCount.style.color=msgArea.value.length>1800?'var(--accent)':'var(--muted)';
 });
- 
-// ── 4. RATE LIMIT — max 2 submissions per 10 mins ──
-const RATE_KEY = 'cf_submissions';
-function getRateData() {
-  try { return JSON.parse(sessionStorage.getItem(RATE_KEY)) || []; } catch { return []; }
+const RATE_KEY='cf_submissions';
+function getRateData(){try{return JSON.parse(sessionStorage.getItem(RATE_KEY))||[];}catch{return[];}}
+function recordSubmission(){const now=Date.now();const recent=getRateData().filter(t=>now-t<10*60*1000);recent.push(now);sessionStorage.setItem(RATE_KEY,JSON.stringify(recent));}
+function isRateLimited(){const now=Date.now();return getRateData().filter(t=>now-t<10*60*1000).length>=2;}
+function showFormError(msg){errMsg.textContent='❌ '+msg;errMsg.classList.add('show');setTimeout(()=>errMsg.classList.remove('show'),6000);}
+function validateInputs(data){
+  const name=data.get('name').trim();
+  const email=data.get('email').trim();
+  const subject=data.get('subject').trim();
+  const message=data.get('message').trim();
+  if(data.get('website')||data.get('email_confirm'))return 'Bot detected.';
+  if(Date.now()-formOpenTime<4000)return 'Please take a moment to fill out the form.';
+  if(isRateLimited())return 'Too many messages sent. Please wait 10 minutes.';
+  if(name.length<2)return 'Please enter your full name.';
+  if(/https?:\/\/|www\./i.test(name))return 'Name cannot contain URLs.';
+  if(/[<>{}\[\]\\\/]/.test(name))return 'Name contains invalid characters.';
+  if(/\d{4,}/.test(name))return 'Name looks invalid.';
+  const emailRx=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if(!emailRx.test(email))return 'Please enter a valid email address.';
+  const disposable=['mailinator','tempmail','guerrillamail','10minutemail','throwam','trashmail','yopmail','fakeinbox'];
+  if(disposable.some(d=>email.toLowerCase().includes(d)))return 'Disposable email addresses are not allowed.';
+  if(/https?:\/\/|www\./i.test(subject))return 'Subject cannot contain URLs.';
+  if(subject.length<3)return 'Please enter a subject.';
+  const urlMatches=(message.match(/https?:\/\//g)||[]).length;
+  if(urlMatches>2)return 'Message contains too many links.';
+  if(message.length<20)return 'Please write a more detailed message (at least 20 characters).';
+  const spamWords=['casino','viagra','crypto investment','click here','free money','earn $','make money fast','seo service','buy followers','adult content','xxx'];
+  if(spamWords.some(w=>message.toLowerCase().includes(w)||subject.toLowerCase().includes(w)))return 'Your message was flagged as spam.';
+  return null;
 }
-function recordSubmission() {
-  const now = Date.now();
-  const recent = getRateData().filter(t => now - t < 10 * 60 * 1000);
-  recent.push(now);
-  sessionStorage.setItem(RATE_KEY, JSON.stringify(recent));
-}
-function isRateLimited() {
-  const now = Date.now();
-  return getRateData().filter(t => now - t < 10 * 60 * 1000).length >= 2;
-}
- 
-// ── 5. INPUT VALIDATION ──
-function showFormError(msg) {
-  errMsg.querySelector ? (errMsg.textContent = '❌ ' + msg) : null;
-  errMsg.textContent = '❌ ' + msg;
-  errMsg.classList.add('show');
-  setTimeout(() => errMsg.classList.remove('show'), 6000);
-}
- 
-function validateInputs(data) {
-  const name    = data.get('name').trim();
-  const email   = data.get('email').trim();
-  const subject = data.get('subject').trim();
-  const message = data.get('message').trim();
- 
-  // Honeypot check
-  if (data.get('website') || data.get('email_confirm')) return 'Bot detected.';
- 
-  // Time check — must spend at least 4 seconds on form
-  if (Date.now() - formOpenTime < 4000) return 'Please take a moment to fill out the form.';
- 
-  // Rate limit
-  if (isRateLimited()) return 'Too many messages sent. Please wait 10 minutes.';
- 
-  // Name: no URLs, no numbers, no special chars, 2–80 chars
-  if (name.length < 2) return 'Please enter your full name.';
-  if (/https?:\/\/|www\./i.test(name)) return 'Name cannot contain URLs.';
-  if (/[<>{}\[\]\\\/]/.test(name)) return 'Name contains invalid characters.';
-  if (/\d{4,}/.test(name)) return 'Name looks invalid.';
- 
-  // Email: basic format + no disposable domain keywords
-  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  if (!emailRx.test(email)) return 'Please enter a valid email address.';
-  const disposable = ['mailinator','tempmail','guerrillamail','10minutemail','throwam','trashmail','yopmail','fakeinbox'];
-  if (disposable.some(d => email.toLowerCase().includes(d))) return 'Disposable email addresses are not allowed.';
- 
-  // Subject: no URLs
-  if (/https?:\/\/|www\./i.test(subject)) return 'Subject cannot contain URLs.';
-  if (subject.length < 3) return 'Please enter a subject.';
- 
-  // Message: no excessive URLs, min length
-  const urlMatches = (message.match(/https?:\/\//g) || []).length;
-  if (urlMatches > 2) return 'Message contains too many links.';
-  if (message.length < 20) return 'Please write a more detailed message (at least 20 characters).';
- 
-  // Spam keywords
-  const spamWords = ['casino','viagra','crypto investment','click here','free money','earn $','make money fast','seo service','buy followers','adult content','xxx'];
-  if (spamWords.some(w => message.toLowerCase().includes(w) || subject.toLowerCase().includes(w)))
-    return 'Your message was flagged as spam.';
- 
-  return null; // all good
-}
- 
-form.addEventListener('submit', async e => {
+form.addEventListener('submit',async e=>{
   e.preventDefault();
   okMsg.classList.remove('show');
   errMsg.classList.remove('show');
- 
-  const data = new FormData(form);
- 
-  // Validate inputs
-  const validationError = validateInputs(data);
-  if (validationError) { showFormError(validationError); return; }
- 
-  // Check CAPTCHA
-  const userAnswer = parseInt(document.getElementById('captchaInput').value, 10);
-  if (isNaN(userAnswer) || userAnswer !== captchaAnswer) {
+  const data=new FormData(form);
+  const validationError=validateInputs(data);
+  if(validationError){showFormError(validationError);return;}
+  const userAnswer=parseInt(document.getElementById('captchaInput').value,10);
+  if(isNaN(userAnswer)||userAnswer!==captchaAnswer){
     showFormError('Incorrect captcha. Please try again.');
-    const inp = document.getElementById('captchaInput');
-    inp.style.animation = 'shake .4s ease';
-    inp.addEventListener('animationend', () => { inp.style.animation = ''; }, { once: true });
-    refreshCaptcha();
-    return;
+    const inp=document.getElementById('captchaInput');
+    inp.style.animation='shake .4s ease';
+    inp.addEventListener('animationend',()=>{inp.style.animation='';},{once:true});
+    refreshCaptcha();return;
   }
- 
-  sbtn.disabled = true;
-  sbtn.classList.add('loading');
- 
-  try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(data))
+  sbtn.disabled=true;sbtn.classList.add('loading');
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(Object.fromEntries(data))
     });
-    const d = await res.json();
-    if (d.success) {
-      recordSubmission();
-      okMsg.classList.add('show');
-      form.reset();
-      charCount.textContent = '0 / 2000';
-      refreshCaptcha();
-    } else throw new Error(d.message);
-  } catch (err) {
-    errMsg.textContent = '❌ Something went wrong. Please try again.';
-    errMsg.classList.add('show');
-  } finally {
-    sbtn.disabled = false;
-    sbtn.classList.remove('loading');
-    setTimeout(() => { okMsg.classList.remove('show'); errMsg.classList.remove('show'); }, 6000);
-  }
+    const d=await res.json();
+    if(d.success){recordSubmission();okMsg.classList.add('show');form.reset();charCount.textContent='0 / 2000';refreshCaptcha();}
+    else throw new Error(d.message);
+  }catch(err){errMsg.textContent='❌ Something went wrong. Please try again.';errMsg.classList.add('show');}
+  finally{sbtn.disabled=false;sbtn.classList.remove('loading');setTimeout(()=>{okMsg.classList.remove('show');errMsg.classList.remove('show');},6000);}
 });
- 
-/* ── dark mode ── */
 function toggleTheme(){
   const dark=document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme',dark?'dark':'light');
@@ -1107,7 +970,7 @@ function toggleTheme(){
 (function initTheme(){
   const saved=localStorage.getItem('theme');
   const prefersDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  if(saved==='dark'||(! saved&&prefersDark)){
+  if(saved==='dark'||(!saved&&prefersDark)){
     document.documentElement.classList.add('dark');
     const thumb=document.getElementById('themeThumb');
     if(thumb){thumb.style.transform='translateX(18px)';thumb.textContent='☀️';}
